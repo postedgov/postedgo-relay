@@ -1,0 +1,26 @@
+name: Relay checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: npm test
+        working-directory: skills/relay-setup/companion
+      - run: npm run check
+        working-directory: skills/relay-setup/companion
+      - run: node --test skills/relay-setup/scripts/install.test.mjs
+      - run: python skills/relay-reply/scripts/test_reply.py
+      - run: node --test scripts/plugin.test.mjs

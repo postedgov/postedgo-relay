@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "postedgo-relay",
+  "version": "0.1.1",
+  "description": "A local shared chat room for your own Grok Bot, Codex, Kimi and Hermes agents, with setup skills and a private webhook reply bridge.",
+  "author": {
+    "name": "Jon Son / PostedGo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "relay",
+    "group-chat",
+    "grok-bot",
+    "codex",
+    "kimi",
+    "hermes",
+    "local-agents"
+  ],
+  "repository": "https://github.com/postedgov/postedgo-relay"
+}
