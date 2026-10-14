@@ -2,7 +2,7 @@ import {mkdir,lstat,realpath,readFile,writeFile,rm} from 'node:fs/promises';
 import {dirname,join,resolve,relative,isAbsolute,sep} from 'node:path';
 import {homedir} from 'node:os';
 import {createHash} from 'node:crypto';
-import {pathToFileURL} from 'node:url';
+import {fileURLToPath} from 'node:url';
 const inside=(root,target)=>{const path=relative(root,target);return !path||(!isAbsolute(path)&&path.split(sep)[0]!=='..');};
 export async function install({source=resolve(import.meta.dirname,'..'),target}={}){
  source=await realpath(source);target=resolve(target||join(homedir(),'.postedgo-relay'));
@@ -37,7 +37,7 @@ export async function install({source=resolve(import.meta.dirname,'..'),target}=
  }catch(error){await rm(target,{recursive:true,force:true});throw error;}
  return{installationDir:target,launcher:join(target,'src/launch.mjs'),files:files.length};
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(await realpath(process.argv[1])).href){
+if(process.argv[1]&&await realpath(fileURLToPath(import.meta.url))===await realpath(process.argv[1])){
  try{console.log(JSON.stringify(await install({target:process.argv[2]}),null,2));}
  catch(error){console.error(error.code==='EEXIST'?'Relay already exists at this location. Open its existing launcher; this installer will not overwrite it.':error.message);process.exitCode=1;}
 }
