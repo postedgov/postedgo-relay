@@ -33,8 +33,8 @@ Grok Bot normally runs in the cloud. Installing this plugin there does not insta
 | Component | Support and current verification |
 | --- | --- |
 | Mac companion | Browser room and native/webhook bridges tested on macOS. |
-| Windows companion | Windows launcher, native executable discovery, folder opening and Job Object process containment implemented; real Windows run still required before claiming platform certification. `.cmd`/`.bat` agent shims are not executed: use native `.exe`/`.com` CLI binaries. Existing PowerShell policy must allow the bundled helper; Relay does not bypass it. |
-| Linux companion | Shell launcher, PATH discovery, process groups and `xdg-open` integration implemented; real Linux desktop run still required. |
+| Windows companion | Windows launcher, native executable discovery and Job Object process containment included; native runner checks cover process-tree shutdown and UTF-8 streams. See CI for the current results; interactive desktop and provider sign-in checks remain separate. `.cmd`/`.bat` agent shims are not executed: use native `.exe`/`.com` CLI binaries. Existing PowerShell policy must allow the bundled helper; Relay does not bypass it. |
+| Linux companion | Shell launcher, PATH discovery and process groups included; CI checks a headless install/start/stop on Ubuntu. A graphical desktop and provider sign-ins need an interactive check. |
 | Grok Bot | One webhook-enabled chosen Bot; native approvals remain in Grok Bot. Existing bridge has been tested live. Marketplace loading of this new plugin is a separate pending check. |
 | Codex / Kimi / Hermes | Their installed CLI must support app-server / ACP as appropriate on that OS. Desktop app installation alone may not provide a usable CLI. Provider availability and plans vary. |
 | Other services | Available through the tools of your connected agents. This release does not add arbitrary providers as separate room participants. |
@@ -43,7 +43,7 @@ The first available automatic agent becomes lead, preferring Codex when installe
 
 Marketplace reviewers: use [the review guide](docs/REVIEW.md) for the installation path, reproducible checks and acceptance limits.
 
-Read [privacy and boundaries](docs/PRIVACY.md) before connecting private projects, and [testing instructions](docs/TESTING.md) before distributing a build. Native Windows/Linux verification and marketplace review must not be represented as completed by the local checks alone.
+Read [privacy and boundaries](docs/PRIVACY.md) before connecting private projects, and [testing instructions](docs/TESTING.md) before distributing a build. CI results do not certify native provider sign-ins, interactive desktop behavior, or Grok Bot marketplace loading.
 
 ## Development and removal
 

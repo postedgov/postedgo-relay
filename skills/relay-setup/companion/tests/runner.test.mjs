@@ -19,6 +19,7 @@ test('runner cancellation resolves pending approval and preserves cancelled stat
 test('isolated Git changes apply only after verification to unchanged clean project',async()=>{
  assert.ok(Runner,'runner must exist');const dir=mkdtempSync(join(tmpdir(),'relay-git-'));const repo=join(dir,'project');execFileSync('git',['init',repo],{stdio:'ignore'});
  const git=(...args)=>execFileSync('git',['-C',repo,...args],{env:{...process.env,GIT_AUTHOR_NAME:'Relay Test',GIT_AUTHOR_EMAIL:'test@example.invalid',GIT_COMMITTER_NAME:'Relay Test',GIT_COMMITTER_EMAIL:'test@example.invalid'},encoding:'utf8'});
+ git('config','core.autocrlf','false');git('config','core.eol','lf');
  writeFileSync(join(repo,'file.txt'),'old\n');git('add','.');git('commit','-m','base');const store=new Store(':memory:');const p=store.addProject({name:'P',path:repo});
  class Fake{constructor(id,cwd){this.cwd=cwd;}async run(){writeFileSync(join(this.cwd,'file.txt'),'new\n');writeFileSync(join(this.cwd,'added.txt'),'added\n');return 'implemented';}stop(){}}
  const runner=new Runner(store,dir,{AgentClass:Fake});
@@ -28,6 +29,7 @@ test('isolated Git changes apply only after verification to unchanged clean proj
 test('verification is bound to exact changes, including later unverified handoff edits',async()=>{
  const dir=mkdtempSync(join(tmpdir(),'relay-verify-'));const repo=join(dir,'project');execFileSync('git',['init',repo],{stdio:'ignore'});
  const git=(...args)=>execFileSync('git',['-C',repo,...args],{env:{...process.env,GIT_AUTHOR_NAME:'Relay Test',GIT_AUTHOR_EMAIL:'test@example.invalid',GIT_COMMITTER_NAME:'Relay Test',GIT_COMMITTER_EMAIL:'test@example.invalid'},encoding:'utf8'});
+ git('config','core.autocrlf','false');git('config','core.eol','lf');
  writeFileSync(join(repo,'file.txt'),'base\n');git('add','.');git('commit','-m','base');const store=new Store(':memory:');const p=store.addProject({name:'P',path:repo});
  class Fake{constructor(id,cwd){this.cwd=cwd;this.id=id;}async run(){writeFileSync(join(this.cwd,'file.txt'),this.id+'\n');return 'done';}stop(){}}
  const runner=new Runner(store,dir,{AgentClass:Fake});

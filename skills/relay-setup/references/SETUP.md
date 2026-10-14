@@ -59,7 +59,7 @@ Other apps and services stay connected to their owning agents. Relay forwards co
 - **No automatic Grok reply:** inspect the task details and the chosen Bot's routine. Confirm the full callback object arrived. Long messages are rejected before dispatch; old room context may be omitted.
 - **Stop waiting:** closes the local callback. It cannot cancel a cloud Bot run already accepted. A late answer is discarded; do not start repeated copies of the same work without checking the first run.
 - **Port already used:** stop the other installation or choose another port and private data directory. Do not replace an existing `.relay/` with one from another device.
-- **Windows/Linux:** platform code and automated CI configuration are included, but native OS smoke tests must be completed before a release claims hardware verification.
+- **Windows/Linux:** check the public CI for native runner results. Graphical browser/folder opening and provider sign-ins still require testing in your desktop environment.
 
 ## Plugin loading
 

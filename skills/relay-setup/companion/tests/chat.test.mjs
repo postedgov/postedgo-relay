@@ -69,7 +69,7 @@ test('chat work shares one isolated workspace and prevents applying before queue
  r.tick();await until(()=>!r.active);await r.verify(first.id);await assert.rejects(r.apply(first.id),/Finish related/);
  r.tick();await until(()=>!r.active);assert.equal(s.task(first.id).workspace,s.task(second.id).workspace);assert.equal(readFileSync(join(repo,'file.txt'),'utf8'),'base');
  await r.verify(second.id);await r.apply(second.id);assert.equal(readFileSync(join(repo,'file.txt'),'utf8'),'changed');
- s.addChat(p.id,{text:'Discuss next step'},native);const next=s.tasks()[0];assert.deepEqual(await r.workspace(next),{workspace:realpathSync(repo),baseHead:null});
+ s.addChat(p.id,{text:'Discuss next step'},native);const next=s.tasks()[0];assert.deepEqual(await r.workspace(next),{workspace:realpathSync.native(repo),baseHead:null});
  }finally{r.close();s.close();rmSync(dir,{recursive:true,force:true});}
 });
 
